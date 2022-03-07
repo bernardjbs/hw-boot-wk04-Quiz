@@ -13,7 +13,6 @@ const initialInput = document.querySelector("#initial-input");
 const timeEl = document.querySelector("#time");
 
 // Variables.
-
 let qIdx = 0;
 let score = 0;
 let highScore = 0;
@@ -23,41 +22,58 @@ let secondsLeft = 100;
 const ansLen = questions[qIdx].answers.length;
 const sectionToDisplay = [startPage, quiz, ansResultMsg, initials];
 
+// Starts the quiz when the start quiz button is pressed.
+fillQnA(qIdx);
 function startQuiz() {
     renderQuiz();
+    if(secondsLeft < 0) {
+        localStorage.clear();
+    }
     startPage.dataset.visible = "false";
     quiz.dataset.visible = "true";
     startBtn.addEventListener("click", toDisplay());
-} 
+    timer();
+}
 
-fillQnA(qIdx);
-timer();
+// Will save quiz when window or tab is closed
+window.addEventListener("unload", function (event) {
+    if (secondsLeft > 0) {
+        saveQuiz();
+    }
+})
+
+
 
 function checkAns(clicked_id) {
     document.getElementById("ans-result-msg").style.opacity = "100"
     ansResultMsg.dataset.visible = "false";
     const qLen = questions.length;
-    if (qIdx < qLen-1) {
-        // check answer
+    if (qIdx < qLen - 1) {
+        // Validating the answers. 
         if (clicked_id == questions[qIdx].answer) {
             ansResultMsg.textContent = "The answer is CORRECT";
-            score = score+10;
-            log("this is the correct answer - store the results");
+            score = score + 10;
         }
-        else {            
+        else {
             ansResultMsg.textContent = "The answer is WRONG";
-            secondsLeft = secondsLeft-20;
-            log("this is the wrong answer - store the results");
+            secondsLeft = secondsLeft - 20;
         }
         ansResultMsg.dataset.visible = "true";
         setTimeout(fadeoutMsg, 500);
         // increment the questions index
         qIdx++;
-        fillQnA(qIdx);    
-        //log("qIdx: " + qIdx + " - qLen: " + qLen);
+        fillQnA(qIdx);
     }
-    else if (qIdx === qLen-1) {
+    else if (qIdx === qLen - 1) {
         log("time to input initials and show the results");
+        // Hide answers section and show initials section.            
+        quiz.dataset.visible = "false";
+        initials.dataset.visible = "true";
+        toDisplay();
+
+        // Clear the local storage
+        localStorage.clear();
+        log("local storage 2: " + localStorage.quizInfo);
     }
     else {
         log("there has been an error");
@@ -66,12 +82,11 @@ function checkAns(clicked_id) {
 }
 
 function saveQuiz() {
-    let quizInfo = {        
+    let quizInfo = {
         qIdx: qIdx,
-        secondsLeft: secondsLeft, 
+        secondsLeft: secondsLeft,
         initial: initialInput.value,
-        score: score, 
-        highScore: highScore
+        score: score,
     }
     // save quizInfo obj in local storage
     localStorage.setItem("quizInfo", JSON.stringify(quizInfo));
@@ -79,23 +94,29 @@ function saveQuiz() {
 
 function renderQuiz() {
     let lastQuiz = JSON.parse(localStorage.getItem("quizInfo"));
-    log("quiz index: " + qIdx);
     if (lastQuiz != null) {
-        log("lastQuiz: " + lastQuiz.qIdx);
+        secondsLeft = lastQuiz.secondsLeft;
+        log("seconds left: " + lastQuiz.secondsLeft);
         fillQnA(lastQuiz.qIdx);
     }
 }
 
 function timer() {
-    let timerInterval = setInterval(function() {
+    let timerInterval = setInterval(function () {
         log("i am here");
         secondsLeft--;
         timeEl.innerHTML = " - " + secondsLeft + " seconds left";
 
-        if(secondsLeft === 0) {
+        if (secondsLeft === 0 || secondsLeft < 0) {
             // Stops execution of action at set interval.
             clearInterval(timerInterval);
-            // TODO Get initials and show results
+            // Hide answers section and show initials section.            
+            quiz.dataset.visible = "false";
+            initials.dataset.visible = "true";
+            toDisplay();
+            // Clear the local storage
+            localStorage.clear()
+            log("local storage 1: " + localStorage.quizInfo);
         }
     }, 1000);
 }
@@ -105,11 +126,11 @@ function fillQnA(qIdx) {
     question.textContent = questions[qIdx].question;
     for (i = 0; i < ansLen; i++) {
         document.getElementById(i + 1).textContent = questions[qIdx].answers[i];
-    }    
+    }
 }
 
 function toDisplay() {
-    for(i=0; i<sectionToDisplay.length; i++) {
+    for (i = 0; i < sectionToDisplay.length; i++) {
         if (sectionToDisplay[i].dataset.visible === "false") {
             sectionToDisplay[i].style.display = "none";
         } else {
@@ -121,9 +142,3 @@ function toDisplay() {
 function fadeoutMsg() {
     document.getElementById("ans-result-msg").style.opacity = "0";
 }
-
-
-
-    //checkHighScore();
-    // saveQuiz();
-    

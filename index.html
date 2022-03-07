@@ -8,22 +8,31 @@
     <link rel="stylesheet" href="./assets/css/style.css">
     <title>Document</title>
 </head>
-<body>
+<body class="dark-mode" id="body">
     <section id="start-page" data-visible="true">
         <h1>Coding Quiz Challenge</h1>
         <p>Try to answer the following code-related questions within the time limit. Keep in mind that incorrect answers will penalize your score time by ten seconds.</p>
         <p>GOOD LUCK!</p>
-        <button id="start" onclick="startQuiz()">Start Quiz</button>
+        <button id="startBtn" onclick="startQuiz()">Start Quiz</button>
     </section>
     <section id="quiz" data-visible="false">
         <h2 id="qH2">Question</h2>
+        <p id="time"></p>
         <section id="answers">
             <button class="answersBtn" id="1" onclick="checkAns(this.id)">Answer1</button>
             <button class="answersBtn" id="2" onclick="checkAns(this.id)">Answer2</button>
             <button class="answersBtn" id="3" onclick="checkAns(this.id)">Answer3</button>
             <button class="answersBtn" id="4" onclick="checkAns(this.id)">Answer4</button>    
         </section>
-    </section>    
+    </section> 
+    <section id="initials" data-visible="false">
+        <label>Initials</label>
+        <input type="text" name="initials" id="initial-input">
+    </section>   
+    <section id="ans-result">
+        <p id="ans-result-msg" data-visible="false">result here</p> 
+    </section>
+
     <script src="./assets/js/questions.js"></script>
     <script src="./assets/js/script.js"></script>
 </body>

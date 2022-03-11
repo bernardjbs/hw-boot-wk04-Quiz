@@ -8,29 +8,47 @@
     <link rel="stylesheet" href="./assets/css/style.css">
     <title>Document</title>
 </head>
-<body class="dark-mode" id="body">
-    <section id="start-page" data-visible="true">
-        <h1>Coding Quiz Challenge</h1>
-        <p>Try to answer the following code-related questions within the time limit. Keep in mind that incorrect answers will penalize your score time by ten seconds.</p>
-        <p>GOOD LUCK!</p>
-        <button id="startBtn" onclick="startQuiz()">Start Quiz</button>
-    </section>
-    <section id="quiz" data-visible="false">
-        <h2 id="qH2">Question</h2>
-        <p id="time"></p>
-        <section id="answers">
-            <button class="answersBtn" id="1" onclick="checkAns(this.id)">Answer1</button>
-            <button class="answersBtn" id="2" onclick="checkAns(this.id)">Answer2</button>
-            <button class="answersBtn" id="3" onclick="checkAns(this.id)">Answer3</button>
-            <button class="answersBtn" id="4" onclick="checkAns(this.id)">Answer4</button>    
+<body id="body">
+    <section id="main-container">
+        <section class="sub-container" id="start-page" data-visible="true">
+            <h1>Coding Quiz Challenge</h1>
+            <p>Try to answer the following code-related questions within the time limit. Keep in mind that incorrect answers will penalize your score time by ten seconds.</p>
+            <p>GOOD LUCK!</p>
+            <button id="startBtn" onclick="startQuiz()">Start Quiz</button>
         </section>
-    </section> 
-    <section id="initials" data-visible="false">
-        <h2>GAME OVER. Please enter your initials</h2>
-        <label>Initials</label>
-        <input type="text" name="initials" id="initial-input">
-    </section>   
-    <section id="ans-result">
+        <section class="sub-container" id="quiz" data-visible="false">
+            <h2 id="qH2">Question</h2>
+            <p id="time"></p>
+            <section id="answers">
+                <button class="answersBtn" id="1" onclick="checkAns(this.id)">Answer1</button>
+                <button class="answersBtn" id="2" onclick="checkAns(this.id)">Answer2</button>
+                <button class="answersBtn" id="3" onclick="checkAns(this.id)">Answer3</button>
+                <button class="answersBtn" id="4" onclick="checkAns(this.id)">Answer4</button>    
+            </section>
+        </section> 
+        <section class="sub-container" id="initials" data-visible="false">
+            <h2>GAME OVER!!!</h2>
+            <h2>Please enter your initials</h2>
+            <input type="text" name="initials" id="initial-input">
+            <button id="initialsBtn" onclick="saveHighScores()">Submit</button>
+        </section>   
+
+    
+        <section class="sub-container" id="highscore-section" data-visible="false">
+            <h2 id="highscore-h2">Highscores</h2>
+            <section id="high-score-list">
+                <ul id="highscore-ul">
+                    <li id="highscore-li"></li>
+                </ul>
+            </section>
+            <section id="highscore-buttons">
+                <button>Play Again</button>
+                <button id="clear-btn" onclick="clearHs()">Clear Highscores</button>
+            </section>
+        </section>
+    </section>
+
+    <section id="ans-result ans-right ans-wrong">
         <p id="ans-result-msg" data-visible="false">result here</p> 
     </section>
 

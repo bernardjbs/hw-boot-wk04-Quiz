@@ -1,8 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@900&family=Merriweather:ital,wght@1,700&family=Poppins:wght@300;500;700&display=swap');
 
 * {
-    /* font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Verdana, sans-serif; */
-    /* font-family: 'sans-serif'; */
     font-family: sans-serif, Arial, Helvetica;
     padding: 10px;
 }
@@ -16,24 +14,10 @@ h2 {
     font-size: 2em;
     font-family: 'Heebo', sans-serif;
 }
-#quiz, #answers {
-    /* border: 1px solid red; */
-    display: flex;
-    flex-direction: column;
+
+p {
+    font-size: 1.25em;
 }
-
-/* #answers {
-} */
-
-.equalHW {
-	flex: 1 1 auto;
-}
-
-.answersBtn {
-    padding: 1em;
-    margin: 1em;
-}
-
 body {
     display: flex;
     justify-content: center;
@@ -43,13 +27,52 @@ body {
 }
 
 #main-container {
-    /* border: 2px dashed black; */
     border-radius: 5px;
     display: flex;
     justify-content: center;
     flex-direction: column;
+    width: 100%;
+    height: 80vh;
+}
+
+#answers {
     width: 75%;
-    height: 40vh;
+}
+
+#quiz, #answers {
+    display: flex;
+    flex-direction: column;
+}
+
+#start-page, #initials, #highscore-section {
+    flex-direction: column;
+    
+}
+
+#startBtn {
+    width: 10em;
+}
+
+#time-yellow, #time-red, #initials-instruction {
+    background-color: black;
+    padding: 0.5em;
+    border-radius: 5px;
+}
+
+#time-yellow, #initials-instruction {
+    color: #fcdc00;
+}
+
+#time-red {
+    color: red;
+}
+
+#initial-input {
+    margin: 1em;
+}
+
+#li-left {
+    text-align: left;
 }
 
 .sub-container {
@@ -59,6 +82,15 @@ body {
     text-align: center;
     width: 100%;
     height: 100%;
+}
+
+.equalHW {
+	flex: 1 1 auto;
+}
+
+.answersBtn {
+    padding: 1em;
+    margin: 1em;
 }
 
 .ans-right, .ans-wrong {
@@ -76,34 +108,30 @@ body {
     color: red;
 }
 
-#answers {
-    width: 75%;
-}
 
-#start-page, #initials, #highscore-section {
-    flex-direction: column;
-    
-}
+/***** MEDIA QUERY *****/
+/* When screen is 450px or less */
+@media screen and (max-width: 450px) {
+    h1 {
+        font-size: 2.5em;
+    }    
+    h2 {
+        font-size: 1.5em;
+    }    
+    p {
+        font-size: 1.2em;
+    }
 
-#startBtn {
-    width: 10em;
-}
+    #answers {
+        width: 100%;
+    }
+    .btn {
+        font-size: .7em;
+    }
 
-#time-yellow, #time-red {
-    background-color: black;
-    padding: 0.5em;
-    border-radius: 5px;
-}
-
-#time-yellow {
-    color: #fcdc00;
-}
-
-#time-red {
-    color: red;
-}
-
-#li-left {
-    text-align: left;
+    .ans-right, .ans-wrong {
+        font-size: 1em;
+        padding: .5em;
+    }
 }
 

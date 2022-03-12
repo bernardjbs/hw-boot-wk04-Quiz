@@ -36,7 +36,7 @@ function startQuiz() {
     startPage.dataset.visible = "false";
     quiz.dataset.visible = "true";
     startBtn.addEventListener("click", toDisplay());
-    timer();
+    //timer();
 }
 
 // Will save quiz when window or tab is closed
@@ -81,7 +81,6 @@ function checkAns(clicked_id) {
 
 function timer() {
     timerInterval = setInterval(function () {
-        log("i am here");
         secondsLeft--;
         // timeEl.setAttribute("style", "background-color: black; color: #fcdc00")
         timeEl.setAttribute("id", "time-yellow")
@@ -112,6 +111,9 @@ function saveHighScores() {
     if (initialInput.value === "") {
         alert("Input is empty. Please enter your initials");
         return;
+    } else if (initialInput.value.length != 2){
+        alert("Please enter TWO characters");
+        return;
     }
 
     let highScores = {
@@ -121,7 +123,7 @@ function saveHighScores() {
     let highScoresParsed = JSON.parse(localStorage.getItem("highScores"));
 
     let game = {
-        name: initialInput.value,
+        name: initialInput.value.toUpperCase(),
         score: score
     }
 
@@ -132,6 +134,10 @@ function saveHighScores() {
     else {
         highScores.games.push(game);
     }
+
+    // Sort by games highscores by score decending.
+    highScores.games.sort((a,b) => parseFloat(b.score) - parseFloat(a.score));
+
     highscoreOl.setAttribute("start", "1")
     highscoreOl.setAttribute("id", "li-left")
     localStorage.setItem("highScores", JSON.stringify(highScores));
@@ -159,7 +165,7 @@ function displayHighscores(highScores) {
 
     for(i=0;i<hs.games.length;i++) {
         let newLi = document.createElement("li");
-        newLi.textContent = "Name: " + hs.games[i].name + " - Score: " + hs.games[i].score;
+        newLi.textContent = "Player: " + hs.games[i].name + " - Score: " + hs.games[i].score;
         highscoreOl.appendChild(newLi);     
     }
     newOl.setAttribute("style", "list-style-type: number");

@@ -12,14 +12,16 @@ const startBtn = document.querySelector("#startBtn");
 const initialInput = document.querySelector("#initial-input");
 const timeEl = document.querySelector("#time");
 const highscoreSection = document.querySelector("#highscore-section");
-let highscoreUl = document.querySelector("#highscore-ul");
+const highScoreLi = document.querySelector("#highscore-li")
+
+// create element
+const highscoreOl = document.createElement("ol");
 
 // Variables.
 let qIdx = 0;
 let score = 0;
 let secondsLeft = 100;
 let timerInterval = 0;
-let highScoresLi = [];
 
 // Constants
 const ansLen = questions[qIdx].answers.length;
@@ -34,7 +36,6 @@ function startQuiz() {
     startPage.dataset.visible = "false";
     quiz.dataset.visible = "true";
     startBtn.addEventListener("click", toDisplay());
-    flexSubContainer(quiz);
     timer();
 }
 
@@ -82,11 +83,12 @@ function timer() {
     timerInterval = setInterval(function () {
         log("i am here");
         secondsLeft--;
-        timeEl.innerHTML = " - " + secondsLeft + " seconds left";
+        // timeEl.setAttribute("style", "background-color: black; color: #fcdc00")
+        timeEl.setAttribute("id", "time-yellow")
+        timeEl.innerHTML = "You have<strong>" + secondsLeft + "</strong>seconds left";
 
         log("qIdx: " + qIdx + " - questions len: " + questions.length);
         if (qIdx === (questions.length)) {
-            window.alert("Clearing interval");
             clearInterval(timerInterval);
         }
         if (secondsLeft === 0 || secondsLeft < 0) {
@@ -98,10 +100,20 @@ function timer() {
             //saveHighScores();
             toDisplay();
         }
+
+        if (secondsLeft < 10) {
+            timeEl.setAttribute("id", "time-red");
+        }
     }, 1000);
 }
 
 function saveHighScores() {
+    // Check if initials user input is empty
+    if (initialInput.value === "") {
+        alert("Input is empty. Please enter your initials");
+        return;
+    }
+
     let highScores = {
         games: []
     }
@@ -114,15 +126,14 @@ function saveHighScores() {
     }
 
     if (highScoresParsed != null) {
-        alert("games array is not empty... push and assign highscoresArr = highScoresParsed")
         highScoresParsed.games.push(game);
         highScores = highScoresParsed;
     }
     else {
-        alert("games array is empty... push highScore")
         highScores.games.push(game);
     }
-
+    highscoreOl.setAttribute("start", "1")
+    highscoreOl.setAttribute("id", "li-left")
     localStorage.setItem("highScores", JSON.stringify(highScores));
     initials.dataset.visible="false";
     highscoreSection.dataset.visible="true";
@@ -133,15 +144,26 @@ function saveHighScores() {
 function displayHighscores(highScores) {
     let hs = highScores;
 
-    // alert("game: " + hs.games[0].score);
-    // For each highscore in highscores, create an li element and append it to ul
+    // New ordered list to be inserted.
+    const newOl = highscoreOl;
+
+    // The reference element
+    const refEl = highScoreLi;
+    refEl.setAttribute("style", "list-style-type: none");
+
+    // The parent element
+    const parentEl = refEl.parentNode;
+
+    // Insert new ordered list 
+    parentEl.insertBefore(newOl, refEl);
+
     for(i=0;i<hs.games.length;i++) {
         let newLi = document.createElement("li");
         newLi.textContent = "Name: " + hs.games[i].name + " - Score: " + hs.games[i].score;
-        highscoreUl.appendChild(newLi);
-        // alert("looping in the hs array");        
+        highscoreOl.appendChild(newLi);     
     }
-
+    newOl.setAttribute("style", "list-style-type: number");
+    
 }
 
 function renderHighScores() {
@@ -175,7 +197,6 @@ function fadeoutMsg() {
 }
 
 function clearHs() {
-    alert("i am here");
     window.localStorage.removeItem("highScores");
     document.querySelector("#high-score-list").style.display = "none";
     document.querySelector("#clear-btn").style.display = "none";
@@ -183,4 +204,8 @@ function clearHs() {
     let clearText = document.createElement("p");
     clearText.textContent = "Press 'Play Again' if you wish to play again";
     highscoreSection.appendChild(clearText);
+}
+
+function playAgain() {
+    location.reload();
 }

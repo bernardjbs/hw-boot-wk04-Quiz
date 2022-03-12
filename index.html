@@ -11,9 +11,9 @@
 <body id="body">
     <section id="main-container">
         <section class="sub-container" id="start-page" data-visible="true">
-            <h1>Coding Quiz Challenge</h1>
-            <p>Try to answer the following code-related questions within the time limit. Keep in mind that incorrect answers will penalize your score time by ten seconds.</p>
-            <p>GOOD LUCK!</p>
+            <h1 class="equalHW">Coding Quiz Challenge</h1>
+            <p class="equalHW">Try to answer the following code-related questions within the time limit. Keep in mind that incorrect answers will penalize your score time by ten seconds.</p>
+            <p class="equalHW">GOOD LUCK!</p>
             <button id="startBtn" onclick="startQuiz()">Start Quiz</button>
         </section>
         <section class="sub-container" id="quiz" data-visible="false">
@@ -24,6 +24,9 @@
                 <button class="answersBtn" id="2" onclick="checkAns(this.id)">Answer2</button>
                 <button class="answersBtn" id="3" onclick="checkAns(this.id)">Answer3</button>
                 <button class="answersBtn" id="4" onclick="checkAns(this.id)">Answer4</button>    
+            </section>
+            <section id="ans-result ans-right ans-wrong">
+                <p id="ans-result-msg" data-visible="false">result here</p> 
             </section>
         </section> 
         <section class="sub-container" id="initials" data-visible="false">
@@ -37,20 +40,19 @@
         <section class="sub-container" id="highscore-section" data-visible="false">
             <h2 id="highscore-h2">Highscores</h2>
             <section id="high-score-list">
-                <ul id="highscore-ul">
+                <ol id="highscore-ol">
                     <li id="highscore-li"></li>
-                </ul>
+                </ol>
             </section>
             <section id="highscore-buttons">
-                <button>Play Again</button>
+                <button id="play-again-btn" onclick="playAgain()">Play Again</button>
                 <button id="clear-btn" onclick="clearHs()">Clear Highscores</button>
             </section>
         </section>
+
     </section>
 
-    <section id="ans-result ans-right ans-wrong">
-        <p id="ans-result-msg" data-visible="false">result here</p> 
-    </section>
+
 
     <script src="./assets/js/questions.js"></script>
     <script src="./assets/js/script.js"></script>

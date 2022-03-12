@@ -25,6 +25,10 @@ h2 {
 /* #answers {
 } */
 
+.equalHW {
+	flex: 1 1 auto;
+}
+
 .answersBtn {
     padding: 1em;
     margin: 1em;
@@ -43,8 +47,9 @@ body {
     border-radius: 5px;
     display: flex;
     justify-content: center;
+    flex-direction: column;
     width: 75%;
-    height: 60vh;
+    height: 40vh;
 }
 
 .sub-container {
@@ -83,3 +88,22 @@ body {
 #startBtn {
     width: 10em;
 }
+
+#time-yellow, #time-red {
+    background-color: black;
+    padding: 0.5em;
+    border-radius: 5px;
+}
+
+#time-yellow {
+    color: #fcdc00;
+}
+
+#time-red {
+    color: red;
+}
+
+#li-left {
+    text-align: left;
+}
+

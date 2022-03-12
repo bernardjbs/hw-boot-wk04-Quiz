@@ -36,7 +36,7 @@ function startQuiz() {
     startPage.dataset.visible = "false";
     quiz.dataset.visible = "true";
     startBtn.addEventListener("click", toDisplay());
-    //timer();
+    timer();
 }
 
 // Will save quiz when window or tab is closed

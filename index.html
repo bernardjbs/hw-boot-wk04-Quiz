@@ -6,16 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./assets/css/reset.css">
     <link rel="stylesheet" href="./assets/css/style.css">
-    <title>Document</title>
+    <title>JavaScript Code Quiz</title>
 </head>
 <body id="body">
     <section id="main-container">
+
+        <!-- This section is for the start page display -->
         <section class="sub-container" id="start-page" data-visible="true">
             <h1 class="equalHW">Coding Quiz Challenge</h1>
             <p class="equalHW">Try to answer the following code-related questions within the time limit. Keep in mind that incorrect answers will penalize your score time by ten seconds.</p>
             <h2 class="equalHW">GOOD LUCK!</h2>
             <button class="btn" id="startBtn" onclick="startQuiz()">Start Quiz</button>
         </section>
+
+        <!-- This section is for the quiz questions display-->
         <section class="sub-container" id="quiz" data-visible="false">
             <h2 id="qH2">Question</h2>
             <p class="time`" id="time"></p>
@@ -25,10 +29,13 @@
                 <button class="btn answersBtn" id="3" onclick="checkAns(this.id)">Answer3</button>
                 <button class="btn answersBtn" id="4" onclick="checkAns(this.id)">Answer4</button>    
             </section>
+            <!-- This section is to display the answer result -->
             <section id="ans-result ans-right ans-wrong">
                 <p id="ans-result-msg" data-visible="false">result here</p> 
             </section>
         </section> 
+
+        <!-- This section is for the initials input display -->
         <section class="sub-container" id="initials" data-visible="false">
             <h1>GAME OVER!!!</h1>
             <h2>Please enter your initials</h2>
@@ -36,6 +43,8 @@
             <input type="text" name="initials" id="initial-input">
             <button class="btn" id="initialsBtn" onclick="saveHighScores()">Submit</button>
         </section>   
+        
+        <!-- This section is for the highscores list display -->
         <section class="sub-container" id="highscore-section" data-visible="false">
             <h1 id="highscore-h2">Highscores</h1>
             <section id="high-score-list">

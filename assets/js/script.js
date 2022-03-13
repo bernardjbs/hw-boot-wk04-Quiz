@@ -1,8 +1,4 @@
-function log(log) {
-    return console.log(log);
-}
-
-// Query Selectors
+// Query Selectors.
 const startPage = document.querySelector("#start-page");
 const quiz = document.querySelector("#quiz");
 const ansResultMsg = document.querySelector("#ans-result-msg");
@@ -14,7 +10,7 @@ const timeEl = document.querySelector("#time");
 const highscoreSection = document.querySelector("#highscore-section");
 const highScoreLi = document.querySelector("#highscore-li")
 
-// create element
+// create element.
 const highscoreOl = document.createElement("ol");
 
 // Variables.
@@ -23,7 +19,7 @@ let score = 0;
 let secondsLeft = 100;
 let timerInterval = 0;
 
-// Constants
+// Constants.
 const ansLen = questions[qIdx].answers.length;
 const sectionToDisplay = [startPage, quiz, ansResultMsg, initials, highscoreSection];
 
@@ -39,16 +35,21 @@ function startQuiz() {
     timer();
 }
 
-// Will save quiz when window or tab is closed
-window.addEventListener("unload", function (event) {
-    //save local data
-})
+// Function to fill the questions to the question text contents.
+function fillQnA(qIdx) {
+    toDisplay();
+    question.textContent = questions[qIdx].question;
+    for (i = 0; i < ansLen; i++) {
+        document.getElementById(i + 1).textContent = questions[qIdx].answers[i];
+    }
+}
 
+// Function to check if the answers are correct or wrong.
 function checkAns(clicked_id) {
     document.getElementById("ans-result-msg").style.opacity = "100"
     ansResultMsg.dataset.visible = "false";
     const qLen = questions.length;
-    if (qIdx < qLen - 1) {
+    if (qIdx < qLen) {
         // Validating the answers. 
         if (clicked_id == questions[qIdx].answer) {
             ansResultMsg.setAttribute("class", "ans-right");
@@ -62,31 +63,28 @@ function checkAns(clicked_id) {
         }
         ansResultMsg.dataset.visible = "true";
         setTimeout(fadeoutMsg, 500);
-        // increment the questions index
+        // increment the questions index.
         qIdx++;
-        fillQnA(qIdx);
-    }
-    else if (qIdx === qLen - 1) {
-        log("time to input initials and show the results");
-        clearInterval(timerInterval);
-        // Hide answers section and show initials section.            
-        quiz.dataset.visible = "false";
-        initials.dataset.visible = "true";
-        toDisplay();
-    }
-    else {
-        log("there has been an error");
+        if (qIdx != qLen) {
+            fillQnA(qIdx);
+        }
+
+        if (qIdx == qLen) {
+            clearInterval(timerInterval);
+            // Hide answers section and show initials section.            
+            quiz.dataset.visible = "false";
+            initials.dataset.visible = "true";
+            toDisplay();
+        }
     }
 }
 
+// Function for countdown game timer.
 function timer() {
     timerInterval = setInterval(function () {
         secondsLeft--;
-        // timeEl.setAttribute("style", "background-color: black; color: #fcdc00")
         timeEl.setAttribute("id", "time-yellow")
         timeEl.innerHTML = "You have<strong>" + secondsLeft + "</strong>seconds left";
-
-        log("qIdx: " + qIdx + " - questions len: " + questions.length);
         if (qIdx === (questions.length)) {
             clearInterval(timerInterval);
         }
@@ -96,18 +94,18 @@ function timer() {
             // Hide answers section and show initials section.            
             quiz.dataset.visible = "false";
             initials.dataset.visible = "true";
-            //saveHighScores();
             toDisplay();
         }
 
-        if (secondsLeft < 10) {
+        if (secondsLeft <= 10) {
             timeEl.setAttribute("id", "time-red");
         }
     }, 1000);
 }
 
+// Function to save the highscores to localstorage. The highscores are sorted descending.
 function saveHighScores() {
-    // Check if initials user input is empty
+    // Check if initials user input is empty.
     if (initialInput.value === "") {
         alert("Input is empty. Please enter your initials");
         return;
@@ -135,7 +133,7 @@ function saveHighScores() {
         highScores.games.push(game);
     }
 
-    // Sort by games highscores by score decending.
+    // Sort by games highscores by score descending.
     highScores.games.sort((a,b) => parseFloat(b.score) - parseFloat(a.score));
 
     highscoreOl.setAttribute("start", "1")
@@ -147,20 +145,21 @@ function saveHighScores() {
     toDisplay();
 }
 
+// Function to create li elements to display the highscores. 
 function displayHighscores(highScores) {
     let hs = highScores;
 
     // New ordered list to be inserted.
     const newOl = highscoreOl;
 
-    // The reference element
+    // The reference element.
     const refEl = highScoreLi;
     refEl.setAttribute("style", "list-style-type: none");
 
-    // The parent element
+    // The parent element.
     const parentEl = refEl.parentNode;
 
-    // Insert new ordered list 
+    // Insert new ordered list.
     parentEl.insertBefore(newOl, refEl);
 
     for(i=0;i<hs.games.length;i++) {
@@ -172,22 +171,12 @@ function displayHighscores(highScores) {
     
 }
 
+// Function to render highscores.
 function renderHighScores() {
     let highScores = JSON.parse(localStorage.getItem("highScores"));
-    if (highScores != null) {
-        log("highScores lenght: " + highScores.games.length);
-    }
 }
 
-function fillQnA(qIdx) {
-    toDisplay();
-    question.textContent = questions[qIdx].question;
-    for (i = 0; i < ansLen; i++) {
-        document.getElementById(i + 1).textContent = questions[qIdx].answers[i];
-    }
-    // flexSubContainer(quiz);
-}
-
+// Function to decide which section to display.
 function toDisplay() {
     for (i = 0; i < sectionToDisplay.length; i++) {
         if (sectionToDisplay[i].dataset.visible === "false") {
@@ -198,10 +187,12 @@ function toDisplay() {
     }
 }
 
+// Function to fade the result message.
 function fadeoutMsg() {
     document.getElementById("ans-result-msg").style.opacity = "0";
 }
 
+// Function to clear the highscores from the localstorage.
 function clearHs() {
     window.localStorage.removeItem("highScores");
     document.querySelector("#high-score-list").style.display = "none";
@@ -212,6 +203,7 @@ function clearHs() {
     highscoreSection.appendChild(clearText);
 }
 
+// Function to reload the game by refreshing the page
 function playAgain() {
     location.reload();
 }

@@ -1,4 +1,4 @@
-# hw-boot-wk04-Quiz
+# Javascript Quiz Web App
 
 ## The App
 This is a timed JavaScript code quiz app with multiple choice questions. The app runs in a browser which is responsive using HTML, CSS and JavsScript. 
